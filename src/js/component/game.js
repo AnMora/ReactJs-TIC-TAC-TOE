@@ -1,6 +1,9 @@
 import React from "react";
+import Board from "./board.js";
+// import React, { Component } from "react";
+// import { render } from "sass";
 
-function calculateWinner(squares) {
+export function calculateWinner(squares) {
 	const lines = [
 		[0, 1, 2],
 		[3, 4, 5],
@@ -22,4 +25,41 @@ function calculateWinner(squares) {
 		}
 	}
 	return null;
+}
+
+export class Game extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			squares: Array(9).fill(null),
+			xIsNext: true
+		};
+	}
+
+	handleClick(i) {
+		//Slice es para crear una copia del array squares para modificarlo en vez de modificar el existente
+		const squares = this.state.squares.slice();
+		if (calculateWinner(squares) || squares[i]) {
+			return;
+		}
+		squares[i] = this.state.xIsNext ? "X" : "O";
+		//squares[i] = 'X';
+		this.setState({
+			squares: squares,
+			xIsNext: !this.state.xIsNext
+		});
+	}
+
+	render() {
+		//const status = 'Next Player: ' + (this.state.xIsNext ? 'X' : 'O');
+		const winner = calculateWinner(this.state.squares);
+		let status;
+		if (winner) {
+			status = "Winner: " + winner;
+		} else {
+			status = "Next Player: " + (this.state.xIsNext ? "X" : "O");
+		}
+
+		return <div></div>;
+	}
 }
