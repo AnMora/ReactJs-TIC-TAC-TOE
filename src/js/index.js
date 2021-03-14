@@ -36,6 +36,9 @@ function Board({ squares, onClick }) {
 	);
 }
 
+var player1 = prompt("Ingrese nombre jugador 1:");
+var player2 = prompt("Ingrese nombre jugador 2:");
+
 function historyReducer(state, action) {
 	const { history, entryNumber } = state;
 	switch (action.type) {
@@ -95,7 +98,15 @@ function useGame() {
 	} else if (squares.every(Boolean)) {
 		status = `Scratch: Cat's game`;
 	} else {
-		status = `Next player: ${xIsNext ? "X" : "O"}`;
+		status = `Next player: ${xIsNext ? player1 : player2}`;
+	}
+
+	if (winner == "O") {
+		status = "Winner is: " + player2;
+	}
+
+	if (winner == "X") {
+		status = "winner is: " + player1;
 	}
 
 	return { history, squares, selectSquare, goToStep: goToEntry, status };
